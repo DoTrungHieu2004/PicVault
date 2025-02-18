@@ -1,9 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const buttons = document.querySelectorAll(".btn");
+    const user = JSON.parse(localStorage.getItem('user'));
 
-    buttons.forEach(button => {
-        button.addEventListener("click", () => {
-            alert("Feature coming soon!");
-        });
-    });
+    if (user) {
+        document.getElementById("user-info").innerText = `Welcome, ${user.username}`;
+        document.getElementById("logout-btn").classList.remove("hidden");
+    }
 });

@@ -9,8 +9,18 @@ body {
     height: 100vh;
 }
 
+input {
+    width: 90%;
+    margin: 5px 0;
+    padding: 8px;
+    border: 2px solid black;
+    background: white;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+}
+
 .window {
-    width: 300px;
+    width: 500px;
     background: silver;
     border: 3px solid black;
     box-shadow: 5px 5px 0px black;
@@ -47,4 +57,21 @@ body {
     background: lightgray;
     border: 2px solid black;
     cursor: pointer;
+}
+
+.link-btn {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    color: blue;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.link-btn:hover {
+    text-decoration: underline;
+}
+
+.hidden {
+    display: none;
 }

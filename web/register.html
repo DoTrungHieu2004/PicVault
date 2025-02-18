@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - PicVault</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script defer src="js/auth.js"></script>
+</head>
+<body>
+    <div class="window">
+        <div class="title-bar">
+            <div class="title">Register</div>
+            <div class="controls">
+                <button class="close" onclick="window.location.href='index.html'">X</button>
+            </div>
+        </div>
+
+        <div class="content">
+            <input type="text" id="register-username" placeholder="Username">
+            <input type="email" id="register-email" placeholder="Email">
+            <input type="password" id="register-password" placeholder="Password">
+            <button class="btn" onclick="registerUser()">Register</button>
+        </div>
+    </div>
+</body>
+</html>
