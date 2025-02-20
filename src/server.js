@@ -13,6 +13,7 @@ app.use(cors(require('./config/corsConfig')));
 
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/files', require('./routes/fileRoutes'));
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+const crypto = require('crypto');
 const User = require('../models/User');
+const sendEmail = require('../utils/sendEmail');
 
 dotenv.config();
 
@@ -31,4 +33,41 @@ exports.loginUser = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: "Server error" });
     }
+};
+
+exports.forgotPassword = async (req, res) => {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const resetToken = user.getResetPasswordToken();
+    await user.save();
+
+    const resetUrl = `http://localhost:3000/reset-password.html?token=${resetToken}`;
+    const message = `Click the link to reset the password ${resetUrl}`;
+
+    try {
+        await sendEmail({ email: user.email, subject: "Password Reset", message });
+        res.json({ message: "Password reset email sent" });
+    } catch (error) {
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+        await user.save();
+        res.status(500).json({ message: "Email could not be sent" });
+    }
+};
+
+exports.resetPassword = async (req, res) => {
+    const resetPasswordToken = crypto.createHash("sha256").update(req.params.token).digest("hex");
+    const user = await User.findOne({ resetPasswordToken, resetPasswordExpire: { $gt: Date.now() } });
+
+    if (!user) return res.status(400).json({ message: "Invalid or expird token" });
+
+    user.password = req.body.password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+    await user.save();
+
+    res.json({ message: "Password reset successful" });
 };

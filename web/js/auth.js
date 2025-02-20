@@ -50,3 +50,20 @@ function logoutUser() {
     alert("Logged out!");
     window.location.href = "login.html";
 }
+
+// Upload file
+async function uploadFile() {
+    const file = document.getElementById("file-input").files[0];
+    if (!file) return alert("Please select a file");
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const response = await fetch('http://localhost:5000/api/files/upload', {
+        method: "POST",
+        body: formData
+    });
+
+    const data = await response.json();
+    document.getElementById("upload-status").innerText = data.message;
+}
